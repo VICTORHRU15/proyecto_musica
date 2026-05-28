@@ -1,28 +1,47 @@
+
+
 const URL = "http://localhost:3000/canciones";
+
 
 const contenedor = document.getElementById("contenedorCanciones");
 
 const buscador = document.getElementById("busqueda");
 
 const btnNombre = document.getElementById("ordenarNombre");
+
 const btnAnio = document.getElementById("ordenarAnio");
 
+const formulario = document.getElementById("formCancion");
+
+
 let canciones = [];
+
+let editando = false;
+
+let idEditar = null;
+
 
 
 async function obtenerCanciones(){
 
-    const respuesta = await fetch(URL);
+    try{
 
-    const datos = await respuesta.json();
+        const respuesta = await fetch(URL);
 
-    canciones = datos;
+        const datos = await respuesta.json();
 
-    mostrarCanciones(canciones);
+        canciones = datos;
+
+        mostrarCanciones(canciones);
+
+    }catch(error){
+
+        console.log(error);
+
+    }
 
 }
 
-obtenerCanciones();
 
 function mostrarCanciones(lista){
 
@@ -36,7 +55,7 @@ function mostrarCanciones(lista){
 
             <img 
                 src="${cancion.url_imagen}" 
-                width="200"
+                alt="imagen"
             >
 
             <h2>${cancion.nombreCancion}</h2>
@@ -77,64 +96,115 @@ function mostrarCanciones(lista){
 
 }
 
-buscador.addEventListener("keyup", () => {
 
-    const texto = buscador.value.toLowerCase();
 
-    const filtradas = canciones.filter(cancion =>
+formulario.addEventListener("submit", async (e) => {
 
-        cancion.nombreCancion.toLowerCase().includes(texto) ||
-        cancion.artista.toLowerCase().includes(texto) ||
-        cancion.genero.toLowerCase().includes(texto)
+    e.preventDefault();
 
-    );
+    const nuevaCancion = {
 
-    mostrarCanciones(filtradas);
+        nombreCancion:
+            document.getElementById("nombreCancion").value,
+
+        artista:
+            document.getElementById("artista").value,
+
+        album:
+            document.getElementById("album").value,
+
+        anio:
+            document.getElementById("anio").value,
+
+        genero:
+            document.getElementById("genero").value,
+
+        url_imagen:
+            document.getElementById("imagen").value
+
+    };
+
+    try{
+
+
+        if(editando){
+
+            await fetch(`${URL}/${idEditar}`, {
+
+                method: "PUT",
+
+                headers: {
+
+                    "Content-Type": "application/json"
+
+                },
+
+                body: JSON.stringify(nuevaCancion)
+
+            });
+
+            editando = false;
+
+            idEditar = null;
+
+        }
+
+        else{
+
+            await fetch(URL, {
+
+                method: "POST",
+
+                headers: {
+
+                    "Content-Type": "application/json"
+
+                },
+
+                body: JSON.stringify(nuevaCancion)
+
+            });
+
+        }
+
+        formulario.reset();
+
+        obtenerCanciones();
+
+    }catch(error){
+
+        console.log(error);
+
+    }
 
 });
 
-btnNombre.addEventListener("click", () => {
-
-    canciones.sort((a,b)=>
-
-        a.nombreCancion.localeCompare(
-            b.nombreCancion
-        )
-
-    );
-
-    mostrarCanciones(canciones);
-
-});
-
-btnAnio.addEventListener("click", () => {
-
-    canciones.sort((a,b)=>
-
-        a.anio - b.anio
-
-    );
-
-    mostrarCanciones(canciones);
-
-});
 
 async function eliminarCancion(id){
 
-    await fetch(`${URL}/${id}`, {
+    try{
 
-        method: "DELETE"
+        await fetch(`${URL}/${id}`, {
 
-    });
+            method: "DELETE"
 
-    obtenerCanciones();
+        });
+
+        obtenerCanciones();
+
+    }catch(error){
+
+        console.log(error);
+
+    }
 
 }
 
 
+
 function editar(id){
 
-    const cancion = canciones.find(c => c.id === id);
+    const cancion = canciones.find(c => c.id == id);
 
     document.getElementById("nombreCancion").value =
         cancion.nombreCancion;
@@ -154,4 +224,69 @@ function editar(id){
     document.getElementById("imagen").value =
         cancion.url_imagen;
 
+    editando = true;
+
+    idEditar = id;
+
 }
+
+
+buscador.addEventListener("keyup", () => {
+
+    const texto = buscador.value.toLowerCase();
+
+    const filtradas = canciones.filter(cancion =>
+
+        cancion.nombreCancion
+        .toLowerCase()
+        .includes(texto)
+
+        ||
+
+        cancion.artista
+        .toLowerCase()
+        .includes(texto)
+
+        ||
+
+        cancion.genero
+        .toLowerCase()
+        .includes(texto)
+
+    );
+
+    mostrarCanciones(filtradas);
+
+});
+
+
+btnNombre.addEventListener("click", () => {
+
+    canciones.sort((a,b)=>
+
+        a.nombreCancion.localeCompare(
+            b.nombreCancion
+        )
+
+    );
+
+    mostrarCanciones(canciones);
+
+});
+
+
+
+btnAnio.addEventListener("click", () => {
+
+    canciones.sort((a,b)=>
+
+        b.anio - a.anio
+
+    );
+
+    mostrarCanciones(canciones);
+
+});
+
+
+obtenerCanciones();
