@@ -196,3 +196,53 @@ app.listen(3000, () => {
     console.log("Servidor corriendo en puerto 3000");
 
 });
+
+
+const formulario = document.getElementById("formCancion");
+
+
+formulario.addEventListener("submit", async (e) => {
+
+    e.preventDefault();
+
+    const nuevaCancion = {
+
+        nombreCancion:
+            document.getElementById("nombreCancion").value,
+
+        artista:
+            document.getElementById("artista").value,
+
+        album:
+            document.getElementById("album").value,
+
+        anio:
+            document.getElementById("anio").value,
+
+        genero:
+            document.getElementById("genero").value,
+
+        url_imagen:
+            document.getElementById("imagen").value
+
+    };
+
+    await fetch(URL, {
+
+        method: "POST",
+
+        headers: {
+
+            "Content-Type": "application/json"
+
+        },
+
+        body: JSON.stringify(nuevaCancion)
+
+    });
+
+    formulario.reset();
+
+    obtenerCanciones();
+
+});
