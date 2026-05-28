@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyecto Música</title>
+
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+
+<body>
+
+    <h1> Proyecto Música</h1>
+
+    <input type="text" id="busqueda" placeholder="Buscar canción...">
+
+    <div>
+
+        <button id="ordenarNombre">
+            Ordenar por Nombre
+        </button>
+
+        <button id="ordenarAnio">
+            Ordenar por Año
+        </button>
+
+    </div>
+
+    <form id="formCancion">
+
+        <input type="text" id="nombreCancion" placeholder="Nombre canción">
+
+        <input type="text" id="artista" placeholder="Artista">
+
+        <input type="text" id="album" placeholder="Álbum">
+
+        <input type="number" id="anio" placeholder="Año">
+
+        <input type="text" id="genero" placeholder="Género">
+
+        <input type="text" id="imagen" placeholder="URL imagen">
+
+        <button type="submit">
+            Guardar Canción
+        </button>
+
+    </form>
+
+    <div id="contenedorCanciones"></div>
+
+    <script src="js/app.js"></script>
+
+</body>
+
+</html>
