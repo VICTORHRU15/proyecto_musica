@@ -1,9 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
 
-/* =========================
-   GENERAL
-========================= */
-
 * {
     margin: 0;
     padding: 0;
@@ -27,10 +23,6 @@ body {
 
 }
 
-/* =========================
-   HEADER
-========================= */
-
 h1 {
 
     text-align: center;
@@ -48,10 +40,6 @@ h1 {
     text-shadow: 0px 0px 15px #1DB954;
 
 }
-
-/* =========================
-   BUSCADOR
-========================= */
 
 .contenedor-busqueda {
 
@@ -229,9 +217,7 @@ form button:hover {
 
 }
 
-/* =========================
-   CONTENEDOR TARJETAS
-========================= */
+
 
 #contenedorCanciones {
 
@@ -245,9 +231,6 @@ form button:hover {
 
 }
 
-/* =========================
-   TARJETAS
-========================= */
 
 .tarjeta {
 
@@ -275,9 +258,6 @@ form button:hover {
 
 }
 
-/* =========================
-   IMAGEN
-========================= */
 
 .tarjeta img {
 
@@ -289,9 +269,6 @@ form button:hover {
 
 }
 
-/* =========================
-   CONTENIDO TARJETA
-========================= */
 
 .tarjeta h2 {
 
@@ -315,9 +292,6 @@ form button:hover {
 
 }
 
-/* =========================
-   BOTONES TARJETA
-========================= */
 
 .tarjeta button {
 
@@ -339,8 +313,6 @@ form button:hover {
 
 }
 
-/* EDITAR */
-
 .tarjeta button:first-of-type {
 
     background: #2196F3;
@@ -355,7 +327,6 @@ form button:hover {
 
 }
 
-/* ELIMINAR */
 
 .tarjeta button:last-of-type {
 
@@ -371,9 +342,6 @@ form button:hover {
 
 }
 
-/* =========================
-   RESPONSIVE
-========================= */
 
 @media(max-width:600px) {
 
